@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddReminderViewController" customModule="Where_In_The_World_" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adjust radius and press button to confirm." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EHC-6Y-WPc">
+                    <rect key="frame" x="16" y="8" width="568" height="21"/>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Cq-EQ-863">
+                    <rect key="frame" x="513" y="37" width="55" height="30"/>
+                    <state key="normal" title="Confirm">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="confirmButtonPressed:" destination="-1" eventType="touchUpInside" id="MW0-M4-yKM"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzs-RM-KPD">
+                    <rect key="frame" x="32" y="37" width="48" height="30"/>
+                    <state key="normal" title="Cancel">
+                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="njv-iK-clI"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="EHC-6Y-WPc" secondAttribute="trailing" constant="16" id="1M2-Io-RPv"/>
+                <constraint firstAttribute="trailing" secondItem="0Cq-EQ-863" secondAttribute="trailing" constant="32" id="UdV-w1-iVV"/>
+                <constraint firstItem="0Cq-EQ-863" firstAttribute="top" secondItem="EHC-6Y-WPc" secondAttribute="bottom" constant="8" id="Xlc-NZ-yQq"/>
+                <constraint firstItem="EHC-6Y-WPc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="Y2S-IW-psB"/>
+                <constraint firstItem="fzs-RM-KPD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="32" id="a7B-CT-lTC"/>
+                <constraint firstItem="EHC-6Y-WPc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="gRs-iE-Bnk"/>
+                <constraint firstAttribute="centerX" secondItem="0Cq-EQ-863" secondAttribute="centerX" id="irF-5p-EF4"/>
+                <constraint firstItem="fzs-RM-KPD" firstAttribute="top" secondItem="EHC-6Y-WPc" secondAttribute="bottom" constant="8" id="uXb-5w-PAQ"/>
+            </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="irF-5p-EF4"/>
+                </mask>
+            </variation>
+        </view>
+    </objects>
+</document>

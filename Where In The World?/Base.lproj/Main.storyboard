@@ -7,7 +7,6 @@
         <!--Map-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <viewController id="BYZ-38-t0r" userLabel="Map" customClass="MapViewController" customModule="Where_In_The_World_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="aPG-Pb-Uql"/>
@@ -18,19 +17,23 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="xYF-6s-F1J">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="xYF-6s-F1J" secondAttribute="trailing" id="4ea-ga-fW3"/>
                             <constraint firstAttribute="bottom" secondItem="xYF-6s-F1J" secondAttribute="bottom" id="Mcw-kv-8EK"/>
-                            <constraint firstItem="xYF-6s-F1J" firstAttribute="top" secondItem="aPG-Pb-Uql" secondAttribute="bottom" id="Tz5-Zw-4u9"/>
+                            <constraint firstItem="xYF-6s-F1J" firstAttribute="top" secondItem="aPG-Pb-Uql" secondAttribute="bottom" constant="-20" id="Tz5-Zw-4u9"/>
                             <constraint firstItem="xYF-6s-F1J" firstAttribute="leading" secondItem="I1i-ID-qUW" secondAttribute="leading" id="mSf-cY-6hC"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="S7n-bc-1gX"/>
+                    <connections>
+                        <outlet property="mapView" destination="xYF-6s-F1J" id="L3H-Kl-phY"/>
+                    </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1031" y="292"/>
         </scene>
