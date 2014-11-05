@@ -14,6 +14,7 @@
 		7E2ADC6D1A098E6500370DF4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E2ADC6C1A098E6500370DF4 /* Images.xcassets */; };
 		7E2ADC701A098E6500370DF4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E2ADC6E1A098E6500370DF4 /* LaunchScreen.xib */; };
 		7E2ADC7C1A098E6500370DF4 /* Where_In_The_World_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2ADC7B1A098E6500370DF4 /* Where_In_The_World_Tests.swift */; };
+		7E8415A21A09F7EC006BCAB7 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8415A11A09F7EC006BCAB7 /* Reminder.swift */; };
 		7EE1B90E1A09B33700208110 /* AddReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1B90C1A09B33700208110 /* AddReminderViewController.swift */; };
 		7EE1B90F1A09B33700208110 /* AddReminderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EE1B90D1A09B33700208110 /* AddReminderViewController.xib */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		7E2ADC751A098E6500370DF4 /* Where In The World?Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Where In The World?Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E2ADC7A1A098E6500370DF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E2ADC7B1A098E6500370DF4 /* Where_In_The_World_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Where_In_The_World_Tests.swift; sourceTree = "<group>"; };
+		7E8415A11A09F7EC006BCAB7 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		7EE1B90C1A09B33700208110 /* AddReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminderViewController.swift; sourceTree = "<group>"; };
 		7EE1B90D1A09B33700208110 /* AddReminderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddReminderViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,13 +85,10 @@
 		7E2ADC5F1A098E6500370DF4 /* Where In The World? */ = {
 			isa = PBXGroup;
 			children = (
-				7E2ADC621A098E6500370DF4 /* AppDelegate.swift */,
-				7E2ADC671A098E6500370DF4 /* MapViewController.swift */,
-				7E2ADC691A098E6500370DF4 /* Main.storyboard */,
-				7EE1B90C1A09B33700208110 /* AddReminderViewController.swift */,
-				7EE1B90D1A09B33700208110 /* AddReminderViewController.xib */,
+				7E84159D1A09F1A1006BCAB7 /* Controller Layer */,
+				7E84159E1A09F1B1006BCAB7 /* View Layer */,
+				7E8415A31A09F80A006BCAB7 /* Model Layer */,
 				7E2ADC6C1A098E6500370DF4 /* Images.xcassets */,
-				7E2ADC6E1A098E6500370DF4 /* LaunchScreen.xib */,
 				7E2ADC641A098E6500370DF4 /* Where_In_The_World_.xcdatamodeld */,
 				7E2ADC601A098E6500370DF4 /* Supporting Files */,
 			);
@@ -119,6 +118,34 @@
 				7E2ADC7A1A098E6500370DF4 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7E84159D1A09F1A1006BCAB7 /* Controller Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7E2ADC671A098E6500370DF4 /* MapViewController.swift */,
+				7EE1B90C1A09B33700208110 /* AddReminderViewController.swift */,
+				7E2ADC621A098E6500370DF4 /* AppDelegate.swift */,
+			);
+			name = "Controller Layer";
+			sourceTree = "<group>";
+		};
+		7E84159E1A09F1B1006BCAB7 /* View Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7E2ADC691A098E6500370DF4 /* Main.storyboard */,
+				7EE1B90D1A09B33700208110 /* AddReminderViewController.xib */,
+				7E2ADC6E1A098E6500370DF4 /* LaunchScreen.xib */,
+			);
+			name = "View Layer";
+			sourceTree = "<group>";
+		};
+		7E8415A31A09F80A006BCAB7 /* Model Layer */ = {
+			isa = PBXGroup;
+			children = (
+				7E8415A11A09F7EC006BCAB7 /* Reminder.swift */,
+			);
+			name = "Model Layer";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +253,7 @@
 				7E2ADC681A098E6500370DF4 /* MapViewController.swift in Sources */,
 				7E2ADC661A098E6500370DF4 /* Where_In_The_World_.xcdatamodeld in Sources */,
 				7E2ADC631A098E6500370DF4 /* AppDelegate.swift in Sources */,
+				7E8415A21A09F7EC006BCAB7 /* Reminder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

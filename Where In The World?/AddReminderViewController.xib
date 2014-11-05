@@ -6,6 +6,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AddReminderViewController" customModule="Where_In_The_World_" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="fzs-RM-KPD" id="mFO-5P-yNA"/>
+                <outlet property="confirmButton" destination="0Cq-EQ-863" id="IDB-n1-LNo"/>
+                <outlet property="spinningWheel" destination="3lJ-TF-qaZ" id="NLQ-c2-cRd"/>
+                <outlet property="topLabel" destination="EHC-6Y-WPc" id="XD7-PM-9w7"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -29,7 +33,7 @@
                         <action selector="confirmButtonPressed:" destination="-1" eventType="touchUpInside" id="MW0-M4-yKM"/>
                     </connections>
                 </button>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzs-RM-KPD">
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fzs-RM-KPD">
                     <rect key="frame" x="32" y="37" width="48" height="30"/>
                     <state key="normal" title="Cancel">
                         <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="deviceRGB"/>
@@ -39,20 +43,28 @@
                         <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="njv-iK-clI"/>
                     </connections>
                 </button>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="3lJ-TF-qaZ">
+                    <rect key="frame" x="282" y="8" width="37" height="37"/>
+                    <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="EHC-6Y-WPc" secondAttribute="trailing" constant="16" id="1M2-Io-RPv"/>
+                <constraint firstItem="0Cq-EQ-863" firstAttribute="leading" secondItem="fzs-RM-KPD" secondAttribute="trailing" constant="32" id="IyI-XP-9Hm"/>
                 <constraint firstAttribute="trailing" secondItem="0Cq-EQ-863" secondAttribute="trailing" constant="32" id="UdV-w1-iVV"/>
                 <constraint firstItem="0Cq-EQ-863" firstAttribute="top" secondItem="EHC-6Y-WPc" secondAttribute="bottom" constant="8" id="Xlc-NZ-yQq"/>
                 <constraint firstItem="EHC-6Y-WPc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="Y2S-IW-psB"/>
+                <constraint firstAttribute="centerX" secondItem="3lJ-TF-qaZ" secondAttribute="centerX" id="a4v-ed-DTK"/>
                 <constraint firstItem="fzs-RM-KPD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="32" id="a7B-CT-lTC"/>
+                <constraint firstItem="3lJ-TF-qaZ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="fyI-H0-9Jt"/>
                 <constraint firstItem="EHC-6Y-WPc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="gRs-iE-Bnk"/>
                 <constraint firstAttribute="centerX" secondItem="0Cq-EQ-863" secondAttribute="centerX" id="irF-5p-EF4"/>
                 <constraint firstItem="fzs-RM-KPD" firstAttribute="top" secondItem="EHC-6Y-WPc" secondAttribute="bottom" constant="8" id="uXb-5w-PAQ"/>
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="IyI-XP-9Hm"/>
                     <exclude reference="irF-5p-EF4"/>
                 </mask>
             </variation>

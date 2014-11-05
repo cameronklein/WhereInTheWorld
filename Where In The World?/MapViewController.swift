@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UIGestureRecognizerDelegate {
   
@@ -22,6 +23,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "cancelPressed", name: "cancelPressed", object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "addReminder", name: "addReminder", object: nil)
     
     let longPressRecognizer = UILongPressGestureRecognizer()
     longPressRecognizer.addTarget(self, action: "didPressLongingly:")
@@ -56,7 +60,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     dragCircle = UIView(frame: CGRect(origin: CGPoint(x: -15, y: -15), size: CGSize(width: 15, height: 15)))
-    dragCircle.backgroundColor = UIColor.redColor()
+    dragCircle.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.7)
     dragCircle.layer.cornerRadius = dragCircle.frame.height / 2
     dragCircle.clipsToBounds = true
     self.view.addSubview(dragCircle)
@@ -164,6 +168,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
       let long1 = annotationCenter?.longitude
       let lat2 = coord.latitude
       let long2 = coord.longitude
+      annotationCenter?.longitude
       
       mapView.removeOverlay(adjustableCircle)
       adjustableCircle = MKCircle(centerCoordinate: annotationCenter!, radius: CLLocation(latitude: lat1!, longitude: long1!).distanceFromLocation(CLLocation(latitude: lat2, longitude: long2)))
@@ -186,8 +191,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
   }
 
-  
-  
   func mapView(mapView: MKMapView!, regionWillChangeAnimated animated: Bool) {
     placeDragCircle()
   }
@@ -198,13 +201,65 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
   func placeDragCircle(){
     if adjustableCircle != nil {
       let coord = adjustableCircle!.coordinate
-      let newCoord = CLLocationCoordinate2DMake(coord.latitude, coord.longitude + (adjustableCircle!.radius * 0.0000111))
+      let newCoord = CLLocationCoordinate2DMake(coord.latitude, coord.longitude + (adjustableCircle!.radius * 0.0000115))
       dragCircle!.center = mapView.convertCoordinate(newCoord, toPointToView: self.view)
+      
+      let circleCenter = mapView.convertCoordinate(coord, toPointToView: self.view)
+      
+      let context = UIGraphicsGetCurrentContext()
+      CGContextSetStrokeColorWithColor(context, UIColor.blackColor().CGColor)
+      CGContextSetLineWidth(context, 2.0)
+      CGContextMoveToPoint(context, circleCenter.x, circleCenter.y)
+      CGContextAddLineToPoint(context, dragCircle.center.x, dragCircle.center.y)
+      CGContextStrokePath(context)
+      self.view.setNeedsDisplay()
+      
     }
   }
   
+  func cancelPressed() {
+    dragCircle.frame = CGRect(origin: CGPoint(x: -15, y: -15), size: CGSize(width: 15, height: 15))
+    mapView.removeOverlay(adjustableCircle)
+    mapView.removeAnnotations(mapView.annotations)
+  }
+  
+  func addReminder() {
+
+    println("Add Reminder Called")
+    let alert = UIAlertController(title: nil, message: "Name your reminder", preferredStyle: .Alert)
+    let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default) { (action) -> Void in
+      
+      let appDel = UIApplication.sharedApplication().delegate as AppDelegate
+      let context = appDel.managedObjectContext
+      let reminder = NSEntityDescription.insertNewObjectForEntityForName("Reminder", inManagedObjectContext: context!) as Reminder
+      
+      reminder.setValue(self.annotationCenter?.longitude, forKey: "longitude")
+      reminder.setValue(self.annotationCenter?.latitude, forKey: "latitude")
+      reminder.setValue(self.adjustableCircle?.radius, forKey: "radius")
+      reminder.setValue(NSDate(), forKey: "createdAt")
+      let textField = alert.textFields!.first! as UITextField
+      reminder.setValue(textField.text, forKey: "name")
+      var error : NSError?
+      context?.save(&error)
+      if error != nil {
+        println(error?.localizedDescription)
+      }
+      
+      NSNotificationCenter.defaultCenter().postNotificationName("dismissWithSaveNotification", object: nil)
+      self.mapView.removeAnnotations(self.mapView.annotations)
+      self.dragCircle.center = CGPoint(x: -15, y: -15)
+    }
+    
+    alert.addTextFieldWithConfigurationHandler(nil)
+    alert.addAction(action)
+    self.presentViewController(alert, animated: true, completion: nil)
+
+  }
+  
+  deinit(){
+    NSNotificationCenter.defaultCenter().removeObserver(self)
+  }
   
   
-  
-  
+
 }
