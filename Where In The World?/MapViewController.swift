@@ -92,6 +92,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
   }
   
   func locationManager(manager: CLLocationManager!, didEnterRegion region: CLRegion!) {
+    
+    if (UIApplication.sharedApplication().applicationState == UIApplicationState.Background) {
+      var notification = UILocalNotification()
+      notification.alertAction = "You made it!"
+      notification.alertBody = "You really made it."
+      notification.fireDate = NSDate()
+      UIApplication.sharedApplication().scheduleLocalNotification(notification)
+    }
+    
     println("Entered Region!")
   }
   
