@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A388a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jhh-2o-06g">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Map-->
@@ -40,7 +42,7 @@
         <!--TableView-->
         <scene sceneID="yU2-QK-aQw">
             <objects>
-                <viewController id="rIz-R1-qeS" userLabel="TableView" sceneMemberID="viewController">
+                <viewController id="rIz-R1-qeS" userLabel="TableView" customClass="ReminderTableViewController" customModule="Where_In_The_World_" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="gXY-6K-XCB"/>
                         <viewControllerLayoutGuide type="bottom" id="mK0-q5-yNw"/>
@@ -48,9 +50,49 @@
                     <view key="view" contentMode="scaleToFill" id="L5R-lw-g7m">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="15N-zJ-cXX">
+                                <rect key="frame" x="0.0" y="300" width="600" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="REMINDER_CELL" id="9r4-DP-LIQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9r4-DP-LIQ" id="pYU-qm-68L">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Dnc-0q-dUg">
+                                <rect key="frame" x="0.0" y="20" width="600" height="280"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="15N-zJ-cXX" secondAttribute="bottom" id="BJd-QL-kVI"/>
+                            <constraint firstItem="15N-zJ-cXX" firstAttribute="top" secondItem="L5R-lw-g7m" secondAttribute="topMargin" constant="-20" id="DMA-YD-WDZ"/>
+                            <constraint firstAttribute="trailing" secondItem="15N-zJ-cXX" secondAttribute="trailing" id="Kan-BH-jZH"/>
+                            <constraint firstItem="15N-zJ-cXX" firstAttribute="top" secondItem="Dnc-0q-dUg" secondAttribute="bottom" id="QDt-Hw-H7e"/>
+                            <constraint firstAttribute="height" secondItem="15N-zJ-cXX" secondAttribute="height" multiplier="2" id="Vnn-EW-9rA"/>
+                            <constraint firstItem="Dnc-0q-dUg" firstAttribute="top" secondItem="gXY-6K-XCB" secondAttribute="bottom" id="f2a-dl-qUW"/>
+                            <constraint firstItem="Dnc-0q-dUg" firstAttribute="leading" secondItem="L5R-lw-g7m" secondAttribute="leading" id="iqW-40-zF1"/>
+                            <constraint firstItem="15N-zJ-cXX" firstAttribute="top" secondItem="gXY-6K-XCB" secondAttribute="bottom" id="lkf-hb-2oL"/>
+                            <constraint firstAttribute="trailing" secondItem="Dnc-0q-dUg" secondAttribute="trailing" id="s7V-qS-KSj"/>
+                            <constraint firstItem="15N-zJ-cXX" firstAttribute="leading" secondItem="L5R-lw-g7m" secondAttribute="leading" id="sXD-iV-K4F"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DMA-YD-WDZ"/>
+                                <exclude reference="lkf-hb-2oL"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="rBr-ge-4rc"/>
+                    <connections>
+                        <outlet property="mapView" destination="Dnc-0q-dUg" id="0Ec-TN-Djr"/>
+                        <outlet property="tableView" destination="15N-zJ-cXX" id="sMR-JL-RAz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="P0X-3e-u1J" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -65,7 +65,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Where_In_The_World_.sqlite")
       var error: NSError? = nil
       var failureReason = "There was an error creating or loading the application's saved data."
-      if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+      let options =
+      [NSPersistentStoreUbiquitousContentNameKey: "WhereInTheWorld",
+        NSMigratePersistentStoresAutomaticallyOption: true,
+        NSInferMappingModelAutomaticallyOption: true]
+      if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: options, error: &error) == nil {
           coordinator = nil
           // Report any error we got.
           let dict = NSMutableDictionary()

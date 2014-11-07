@@ -14,6 +14,9 @@
 		7E2ADC6D1A098E6500370DF4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7E2ADC6C1A098E6500370DF4 /* Images.xcassets */; };
 		7E2ADC701A098E6500370DF4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7E2ADC6E1A098E6500370DF4 /* LaunchScreen.xib */; };
 		7E2ADC7C1A098E6500370DF4 /* Where_In_The_World_Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E2ADC7B1A098E6500370DF4 /* Where_In_The_World_Tests.swift */; };
+		7E4044391A0AD49D005394D0 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E4044381A0AD49D005394D0 /* MapKit.framework */; };
+		7E40443C1A0AD4E1005394D0 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7E40443B1A0AD4E1005394D0 /* CloudKit.framework */; };
+		7E40443E1A0AD615005394D0 /* ReminderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E40443D1A0AD615005394D0 /* ReminderTableViewController.swift */; };
 		7E8415A21A09F7EC006BCAB7 /* Reminder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E8415A11A09F7EC006BCAB7 /* Reminder.swift */; };
 		7EE1B90E1A09B33700208110 /* AddReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EE1B90C1A09B33700208110 /* AddReminderViewController.swift */; };
 		7EE1B90F1A09B33700208110 /* AddReminderViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7EE1B90D1A09B33700208110 /* AddReminderViewController.xib */; };
@@ -41,6 +44,10 @@
 		7E2ADC751A098E6500370DF4 /* Where In The World?Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Where In The World?Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E2ADC7A1A098E6500370DF4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7E2ADC7B1A098E6500370DF4 /* Where_In_The_World_Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Where_In_The_World_Tests.swift; sourceTree = "<group>"; };
+		7E4044381A0AD49D005394D0 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		7E40443A1A0AD4D9005394D0 /* Where In The World?.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Where In The World?.entitlements"; sourceTree = "<group>"; };
+		7E40443B1A0AD4E1005394D0 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		7E40443D1A0AD615005394D0 /* ReminderTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewController.swift; sourceTree = "<group>"; };
 		7E8415A11A09F7EC006BCAB7 /* Reminder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reminder.swift; sourceTree = "<group>"; };
 		7EE1B90C1A09B33700208110 /* AddReminderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddReminderViewController.swift; sourceTree = "<group>"; };
 		7EE1B90D1A09B33700208110 /* AddReminderViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AddReminderViewController.xib; sourceTree = "<group>"; };
@@ -51,6 +58,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7E4044391A0AD49D005394D0 /* MapKit.framework in Frameworks */,
+				7E40443C1A0AD4E1005394D0 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +76,8 @@
 		7E2ADC541A098E6500370DF4 = {
 			isa = PBXGroup;
 			children = (
+				7E40443B1A0AD4E1005394D0 /* CloudKit.framework */,
+				7E4044381A0AD49D005394D0 /* MapKit.framework */,
 				7E2ADC5F1A098E6500370DF4 /* Where In The World? */,
 				7E2ADC781A098E6500370DF4 /* Where In The World?Tests */,
 				7E2ADC5E1A098E6500370DF4 /* Products */,
@@ -85,6 +96,7 @@
 		7E2ADC5F1A098E6500370DF4 /* Where In The World? */ = {
 			isa = PBXGroup;
 			children = (
+				7E40443A1A0AD4D9005394D0 /* Where In The World?.entitlements */,
 				7E84159D1A09F1A1006BCAB7 /* Controller Layer */,
 				7E84159E1A09F1B1006BCAB7 /* View Layer */,
 				7E8415A31A09F80A006BCAB7 /* Model Layer */,
@@ -124,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				7E2ADC671A098E6500370DF4 /* MapViewController.swift */,
+				7E40443D1A0AD615005394D0 /* ReminderTableViewController.swift */,
 				7EE1B90C1A09B33700208110 /* AddReminderViewController.swift */,
 				7E2ADC621A098E6500370DF4 /* AppDelegate.swift */,
 			);
@@ -197,6 +210,15 @@
 				TargetAttributes = {
 					7E2ADC5C1A098E6500370DF4 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = 6X3539QT5M;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 					7E2ADC741A098E6500370DF4 = {
 						CreatedOnToolsVersion = 6.1;
@@ -254,6 +276,7 @@
 				7E2ADC661A098E6500370DF4 /* Where_In_The_World_.xcdatamodeld in Sources */,
 				7E2ADC631A098E6500370DF4 /* AppDelegate.swift in Sources */,
 				7E8415A21A09F7EC006BCAB7 /* Reminder.swift in Sources */,
+				7E40443E1A0AD615005394D0 /* ReminderTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,9 +401,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Where In The World?/Where In The World?.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Where In The World?/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -388,9 +415,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Where In The World?/Where In The World?.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "Where In The World?/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
