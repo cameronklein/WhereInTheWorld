@@ -42,8 +42,8 @@ class ReminderTableViewController: UIViewController, UITableViewDelegate, UITabl
       println(error?.localizedDescription)
     }
     
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 48.0
 
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem()
@@ -57,26 +57,28 @@ class ReminderTableViewController: UIViewController, UITableViewDelegate, UITabl
   // MARK: - Table view data source
 
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    println(fetchController.fetchedObjects)
     return self.fetchController.fetchedObjects!.count
   }
 
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("REMINDER_CELL", forIndexPath: indexPath) as UITableViewCell
+    let cell = tableView.dequeueReusableCellWithIdentifier("REMINDER_CELL", forIndexPath: indexPath) as ReminderCell
     let reminder = self.fetchController.fetchedObjects![indexPath.row] as Reminder
-    cell.textLabel.text = reminder.name
-
+    cell.reminderNameLabel.text = reminder.name
+    cell.reminder = reminder
+    cell.onOff.on = reminder.isOn
+    
     return cell
   }
   
 
   /*
   // Override to support conditional editing of the table view.
-  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+  func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
       // Return NO if you do not want the specified item to be editable.
       return true
   }
   */
+
 
   /*
   // Override to support editing the table view.

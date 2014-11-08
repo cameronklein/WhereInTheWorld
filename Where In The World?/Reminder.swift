@@ -12,10 +12,14 @@ import CoreData
 @objc (Reminder)
 class Reminder: NSManagedObject {
 
-    @NSManaged var name: String
-    @NSManaged var createdAt: NSDate
-    @NSManaged var radius: NSNumber
-    @NSManaged var latitude: NSNumber
-    @NSManaged var longitude: NSNumber
+  @NSManaged var name: String
+  @NSManaged var locationID: String
+  @NSManaged var createdAt: NSDate
+  @NSManaged var radius: NSNumber
+  @NSManaged var latitude: NSNumber
+  @NSManaged var longitude: NSNumber
+  @NSManaged var lastSwitched: NSDate
+  @NSManaged var isOn: Bool
+  
 
 }
