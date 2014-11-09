@@ -43,12 +43,14 @@ class AddReminderViewController: UIViewController {
       animations: { () -> Void in
         self.view.frame.origin.y += 125
       },
-      completion: nil)
-    self.confirmButton.alpha = 1
-    self.cancelButton.alpha = 1
-    self.topLabel.alpha = 1
-    self.spinningWheel.alpha = 1
-    self.topLabel.text = "Adjust radius and press button to confirm."
+      completion: { (success) -> Void in
+        self.confirmButton.alpha = 1
+        self.cancelButton.alpha = 1
+        self.topLabel.alpha = 1
+        self.spinningWheel.alpha = 1
+        self.topLabel.text = "Adjust radius and press button to confirm."
+    })
+    
   }
   
   func dismissWithSaveNotification(){

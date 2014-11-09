@@ -10,20 +10,46 @@ import UIKit
 import CoreData
 import MapKit
 
-class ReminderTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, MKMapViewDelegate {
+class ReminderTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate, MKMapViewDelegate, UIGestureRecognizerDelegate {
 
   
   var context : NSManagedObjectContext!
   var fetchController : NSFetchedResultsController!
+  var line : MKPolyline!
+  var dragCircle : UIView!
+  var circle : MKCircle?
+  var offset : (Double, Double)?
+  var currentSelectedReminder : Reminder!
   
   @IBOutlet weak var tableView: UITableView!
   @IBOutlet weak var mapView: MKMapView!
+  @IBOutlet weak var editButton: UIButton!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.delegate = self
     tableView.dataSource = self
     mapView.delegate = self
+    setupDragCircle()
+    setupGestureRecognizers()
+    setupFetchController()
+
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 48.0
+
+  }
+  
+  func setupDragCircle() {
+    
+    dragCircle = UIView(frame: CGRect(origin: CGPoint(x: -20, y: -20), size: CGSize(width: 20, height: 20)))
+    dragCircle.backgroundColor = UIColor.redColor().colorWithAlphaComponent(0.7)
+    dragCircle.layer.cornerRadius = dragCircle.frame.height / 2
+    dragCircle.clipsToBounds = true
+    self.view.addSubview(dragCircle)
+    
+  }
+  
+  func setupFetchController() {
     
     let appDel = UIApplication.sharedApplication().delegate as AppDelegate
     context = appDel.managedObjectContext
@@ -32,7 +58,6 @@ class ReminderTableViewController: UIViewController, UITableViewDelegate, UITabl
     fetchRequest.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: true)]
     self.fetchController = NSFetchedResultsController(fetchRequest: fetchRequest, managedObjectContext: context, sectionNameKeyPath: nil, cacheName: "Reminders")
     fetchController.delegate = self
-    
     var error : NSError?
     fetchController.performFetch(&error)
     
@@ -42,19 +67,27 @@ class ReminderTableViewController: UIViewController, UITableViewDelegate, UITabl
       println(error?.localizedDescription)
     }
     
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 48.0
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+  }
+  
+  func setupGestureRecognizers() {
+    
+    let mapPanRecognizer = UIPanGestureRecognizer()
+    mapPanRecognizer.addTarget(self, action: "didPan:")
+    mapPanRecognizer.delegate = self
+    mapView.addGestureRecognizer(mapPanRecognizer)
+    
+    let mapPinchRecognizer = UIPinchGestureRecognizer()
+    mapPinchRecognizer.addTarget(self, action: "didPinch:")
+    mapPinchRecognizer.delegate = self
+    mapView.addGestureRecognizer(mapPinchRecognizer)
+    
+    let circlePanRecognizer = UIPanGestureRecognizer()
+    circlePanRecognizer.addTarget(self, action: "didPanCircle:")
+    dragCircle.addGestureRecognizer(circlePanRecognizer)
+    
   }
 
-  override func didReceiveMemoryWarning() {
-      super.didReceiveMemoryWarning()
-      // Dispose of any resources that can be recreated.
-  }
-
-  // MARK: - Table view data source
+  // MARK: - Table View Data Source
 
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return self.fetchController.fetchedObjects!.count
@@ -70,80 +103,155 @@ class ReminderTableViewController: UIViewController, UITableViewDelegate, UITabl
     return cell
   }
   
-
-  /*
-  // Override to support conditional editing of the table view.
-  func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-      // Return NO if you do not want the specified item to be editable.
-      return true
-  }
-  */
-
-
-  /*
-  // Override to support editing the table view.
-  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+  // MARK : Table View Delegate
+  
+  func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
       if editingStyle == .Delete {
-          // Delete the row from the data source
-          tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-      } else if editingStyle == .Insert {
-          // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-      }    
+        context.deleteObject(fetchController.fetchedObjects![indexPath.row] as Reminder)
+        var error : NSError?
+        context.save(&error)}
   }
-  */
-
-  /*
-  // Override to support rearranging the table view.
-  override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-  }
-  */
-
-  /*
-  // Override to support conditional rearranging of the table view.
-  override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-      // Return NO if you do not want the item to be re-orderable.
-      return true
-  }
-  */
-
-  /*
-  // MARK: - Navigation
-
-  // In a storyboard-based application, you will often want to do a little preparation before navigation
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-      // Get the new view controller using [segue destinationViewController].
-      // Pass the selected object to the new view controller.
-  }
-  */
   
   func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
     mapView.removeOverlays(mapView.overlays)
     let reminder = fetchController.fetchedObjects![indexPath.row] as Reminder
-    let circle = MKCircle(centerCoordinate: CLLocationCoordinate2DMake(CLLocationDegrees(reminder.latitude), CLLocationDegrees(reminder.longitude)), radius: CLLocationDistance(reminder.radius))
+    currentSelectedReminder = reminder
+    circle = MKCircle(centerCoordinate: CLLocationCoordinate2DMake(CLLocationDegrees(reminder.latitude), CLLocationDegrees(reminder.longitude)), radius: CLLocationDistance(reminder.radius))
     mapView.addOverlay(circle)
     
-    mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: UIEdgeInsetsMake(20, 20, 20, 20), animated: true)
+    mapView.setVisibleMapRect(circle!.boundingMapRect, edgePadding: UIEdgeInsetsMake(20, 20, 20, 20), animated: true)
+
+    let lat1 = circle!.coordinate.latitude
+    let long1 = circle!.coordinate.longitude
+    let lat2 = circle!.coordinate.latitude
+    let long2 = circle!.coordinate.longitude + CLLocationDegrees(Double(reminder.radius) * 0.000013)
+    
+    circle?.boundingMapRect.size
+    
+    var coordinatesForLine = [CLLocationCoordinate2D(latitude: lat2, longitude: long2), circle!.coordinate]
+    
+    line = MKPolyline(coordinates: &coordinatesForLine, count: coordinatesForLine.count)
+    
+    offset = (lat2 - circle!.coordinate.latitude, long2 - circle!.coordinate.longitude)
+    println(offset)
+    
+    mapView.addOverlay(line)
+    
+    placeDragCircle()
     
   }
   
+  // MARK: - Map View Delegate
+  
   func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
-    let renderer = MKCircleRenderer(overlay: overlay)
-    renderer.fillColor = UIColor.greenColor().colorWithAlphaComponent(0.2)
-    renderer.lineWidth = 2
-    renderer.strokeColor = UIColor.greenColor()
+    if overlay === line {
+      
+      let renderer = MKPolylineRenderer(overlay: overlay)
+      renderer.strokeColor = UIColor.blackColor()
+      renderer.lineWidth = 1
+      renderer.lineDashPattern = [2,2]
+      return renderer
+      
+    } else {
+      
+      let renderer = MKCircleRenderer(overlay: overlay)
+      renderer.fillColor = UIColor.greenColor().colorWithAlphaComponent(0.2)
+      renderer.lineWidth = 2
+      renderer.strokeColor = UIColor.greenColor()
+      
+      return renderer
+    }
+  }
+  
+  func mapViewDidFinishRenderingMap(mapView: MKMapView!, fullyRendered: Bool) {
+    placeDragCircle()
+  }
+  
+  // MARK: - Fetch Controller Delegate
+
+  func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
     
-    return renderer
+    switch type {
+    case .Delete:
+      tableView.deleteRowsAtIndexPaths([indexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+    case .Insert:
+      tableView.insertRowsAtIndexPaths([newIndexPath!], withRowAnimation: UITableViewRowAnimation.Fade)
+    default:
+      println("Doing nothing!")
+    }
+  }
+  
+  // MARK: - Gesture Recognizers
+  
+  func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    return true
+  }
+  
+  func didPinch(sender: UIPinchGestureRecognizer){
+    placeDragCircle()
+  }
+  
+  func didPan(sender: UIPanGestureRecognizer){
+    placeDragCircle()
+  }
+  
+  func didPanCircle(sender: UIPanGestureRecognizer){
+    let point = sender.locationInView(self.view)
+    dragCircle.center = point
+    
+    let coord = mapView.convertPoint(point, toCoordinateFromView: self.view)
+    let lat1 = circle!.coordinate.latitude
+    let long1 = circle!.coordinate.longitude
+    let lat2 = coord.latitude
+    let long2 = coord.longitude
+    
+    if sender.state == UIGestureRecognizerState.Changed {
+
+      mapView.removeOverlay(circle)
+      mapView.removeOverlay(line)
+      circle = MKCircle(centerCoordinate: circle!.coordinate, radius: CLLocation(latitude: lat1, longitude: long1).distanceFromLocation(CLLocation(latitude: lat2, longitude: long2)))
+      mapView.addOverlay(circle)
+      
+      var coordinatesForLine = [CLLocationCoordinate2D(latitude: lat2, longitude: long2), circle!.coordinate]
+      
+      line = MKPolyline(coordinates: &coordinatesForLine, count: coordinatesForLine.count)
+      offset = (lat2 - circle!.coordinate.latitude, long2 - circle!.coordinate.longitude)
+      println(offset)
+      
+      mapView.addOverlay(line)
+    }
+    
+    if sender.state == UIGestureRecognizerState.Ended {
+      currentSelectedReminder.radius = CLLocation(latitude: lat1, longitude: long1).distanceFromLocation(CLLocation(latitude: lat2, longitude: long2))
+      var error: NSError?
+      context.save(&error)
+    }
+  }
+  
+  // MARK: - Other
+  
+  func placeDragCircle(){
+    if circle != nil {
+      let point = CLLocationCoordinate2D(latitude: Double(circle!.coordinate.latitude) + offset!.0, longitude: Double(circle!.coordinate.longitude + offset!.1))
+      dragCircle!.center = mapView.convertCoordinate(point, toPointToView: self.mapView)
+      println(dragCircle!.center)
+
+    }
   }
   
   func didGetCloudChanges(notification : NSNotification) {
     self.context.mergeChangesFromContextDidSaveNotification(notification)
   }
-  
-  func controllerDidChangeContent(controller: NSFetchedResultsController) {
-    self.tableView.reloadData()
+
+  @IBAction func editButtonPressed() {
+    
+    tableView.setEditing(!tableView.editing, animated: true)
+    if !tableView.editing {
+      editButton.titleLabel!.text = "Edit"
+    } else {
+      editButton.titleLabel!.text = "Done"
+    }
   }
   
-  
-
 }

@@ -132,13 +132,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
           return renderer
         }
       }
-      renderer.fillColor = UIColor.redColor().colorWithAlphaComponent(0.1)
-      renderer.strokeColor = UIColor.redColor().colorWithAlphaComponent(0.4)
+      renderer.fillColor = UIColor.redColor().colorWithAlphaComponent(0.05)
+      renderer.strokeColor = UIColor.redColor().colorWithAlphaComponent(0.2)
       return renderer
     }
   }
-  
-  
+
   func mapView(mapView: MKMapView!, didAddAnnotationViews views: [AnyObject]!) {
     mapView.removeOverlay(adjustableCircle)
     mapView.removeOverlay(line)
@@ -234,7 +233,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
       let long1 = annotationCenter?.longitude
       let lat2 = coord.latitude
       let long2 = coord.longitude
-      annotationCenter?.longitude
       
       mapView.removeOverlay(adjustableCircle)
       mapView.removeOverlay(line)
@@ -242,7 +240,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
       mapView.addOverlay(adjustableCircle)
       
       var coordinatesForLine = [CLLocationCoordinate2D(latitude: lat2, longitude: long2), annotationCenter!]
-      
       
       line = MKPolyline(coordinates: &coordinatesForLine, count: coordinatesForLine.count)
       
@@ -380,7 +377,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
       self.locationManager.stopMonitoringForRegion(thisRegion)
 
     }
-    
   }
   
   func reactivateRegion(notification: NSNotification) {
@@ -425,11 +421,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         completion: nil)
     }
   }
-  
+ 
   @IBAction func didPressLocateButton(sender: AnyObject) {
-    let userLocation = locationManager.location
-    let circle = MKCircle(centerCoordinate: userLocation.coordinate, radius: CLLocationDistance(500))
-    mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: UIEdgeInsetsMake(0, 0, 0, 0), animated: true)
+    if let userLocation = locationManager.location {
+      let circle = MKCircle(centerCoordinate: userLocation.coordinate, radius: CLLocationDistance(500))
+      mapView.setVisibleMapRect(circle.boundingMapRect, edgePadding: UIEdgeInsetsMake(0, 0, 0, 0), animated: true)
+    } else {
+      
+    }
   }
   
   deinit{
